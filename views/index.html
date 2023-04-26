@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <form onsubmit="signup(event)">
+<body -->
+
+    <!-- <form onsubmit="signup(event)">
     <label for="name">Name</label>
 <input type="text" id="name">
 <label for="email">Email</label>
@@ -17,6 +18,42 @@
 <label for="password">Password</label>
 <input type="password" id="password">
 <button id="btn">submit</button></form>
-    
+  <script src="index.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
 </body>
+</html> --> 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- <script src="./signup.js"></script> -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+    <form onsubmit="signup(event)">
+        <label for="name">Enter Name</label>
+        <input id="name" type="text" name="name">
+        <label for="email">Enter Email</label>
+        <input  id="email" type="email" name="email">
+        <label for="phonenumber">Enter Phonenumber</label>
+        <input id="phonenumber" type="text" name="phonenumber">
+        <label for="password">Enter Password</label>
+        <input id="password" type="password" name="password">
+        <button >Signup</button>
+    </form>
+    <a href="./login.html">Existing user-Login</a>
+    <script src="./index.js"></script>
+
+</body>
+
 </html>
