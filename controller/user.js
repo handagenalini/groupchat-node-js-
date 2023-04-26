@@ -36,3 +36,33 @@ exports.postsignup=async(req,res,next)=>{
         return res.status(500).json({error:err})                    
     }
 }
+const generateAccessToken = (id, name,ispremiumuser) => {
+    return jwt.sign({ userId : id, name: name,ispremiumuser} ,'secretkey');
+}
+exports.login = (req, res) => {
+    const { email, password } = req.body;
+
+    console.log(password);
+    User.findAll({ where : { email }}).then(user => {
+        if(user.length > 0){
+            bcrypt.compare(password,user[0].password,(err,result)=> {
+                if(err){
+                    res.status(500).json({message:'somwthing went wrong'})
+                }
+                if(result === true){
+                    console.log(user[0].ispremiumuser,'------------------------------------------')
+                    return res.status(200).json({success: true, message: "User logged in successfully", token: generateAccessToken(user[0].id, user[0].name,user[0].ispremiumuser)})
+                }
+                // Send JWT
+        
+                 else {
+                // response is OutgoingMessage object that server response http request
+                return res.status(401).json({success: false, message: 'passwords do not match'});
+                }
+            })
+            
+        } else {
+            return res.status(404).json({success: false, message: 'passwords do not match'})
+        }
+    })
+}

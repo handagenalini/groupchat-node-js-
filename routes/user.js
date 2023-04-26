@@ -6,7 +6,7 @@ const router=express.Router()
 
 
 router.post('/add',signupcontroller.postsignup)
-// router.post(`/login`,signupcontroller.login)
+router.post(`/login`,signupcontroller.login)
 
 
 
