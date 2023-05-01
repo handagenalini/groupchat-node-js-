@@ -13,8 +13,22 @@ dotenv.config();
 
 
 const routes=require('./routes/user');
+const message=require('./routes/message');
+
 const User=require('./model/user')
+const Message=require('./model/message')
+
+
 app.use(routes)
+app.use(message)
+
+
+
+User.hasMany(Message, {
+    onDelete: "CASCADE",
+  });
+Message.belongsTo(User);
+
 
 
 
