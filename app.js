@@ -1,47 +1,66 @@
-const express=require('express')
-const app=express()
+const path = require('path');
+const cors=require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const errorController = require('./controllers/error');
+const sequelize = require('./utills/database');
 
-const cors=require('cors')
-const bodyParser = require('body-parser'); 
-const path=require('path')
-const sequelize =require('./utils/database')                       // it gives 4 express middleware for parasing JSON, Text, URL-encoded, raw data sets over an HTTP request body... 
-app.use(bodyParser.json({ extended: false}));
+const app = express();
 app.use(cors())
-const dotenv = require('dotenv');
 
-dotenv.config();
-
-
-const routes=require('./routes/user');
-const message=require('./routes/message');
-
-const User=require('./model/user')
-const Message=require('./model/message')
-
-
-app.use(routes)
-app.use(message)
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-User.hasMany(Message, {
-    onDelete: "CASCADE",
-  });
+//Models
+const User = require('./models/user');
+const Message = require('./models/message')
+const Group = require("./models/group");
+const Groupuser = require("./models/groupuser");
+
+
+//Routes
+const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
+const groupRoutes = require("./routes/group");
+const groupuserRoute = require('./routes/groupuser')
+
+
+
+
+
+app.use(userRoutes)
+app.use(adminRoutes)
+app.use(groupRoutes)
+app.use(groupuserRoute)
+app.use(adminRoutes)
+app.use(errorController.get404);
+
+
+//Relationships
+User.hasMany(Message);
+User.hasMany(Group);
+Group.hasMany(Message);
+Group.hasMany(Groupuser);
+Groupuser.belongsTo(User);
+Groupuser.belongsTo(Group)
 Message.belongsTo(User);
+Message.belongsTo(Group);
 
 
 
 
 
 
-app.use((req,res,next)=>{
-    res.sendFile(path.join(__dirname,`views/${req.url}`))
-})
 
-sequelize.sync().then(()=>{
-    // console.log(result)
-        app.listen(3000)
-    }).catch(err=>{
-        console.log(err)
-    })
-    
+sequelize
+  //.sync({ force: true })
+  .sync()
+  .then(result => {
+    app.listen(3000)
+    //console.log(result);
+  })
+  .catch(err => {
+    console.log(err);
+  });

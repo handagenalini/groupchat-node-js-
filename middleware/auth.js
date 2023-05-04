@@ -1,26 +1,24 @@
-const jwt = require('jsonwebtoken');
-const User = require('../model/user');
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
-const authenticate = (req, res, next) => {
-
-    try {
-        const token = req.header('authorization');
-        console.log(token,"342235");
-        const userid = Number(jwt.verify(token, process.env.TOKEN_SECRET));
-        User.findByPk(userid).then(user => {
-            console.log(JSON.stringify(user));
-            req.user = user;
-            next();
-        }).catch(err => { throw new Error(err)})
-
-      } catch(err) {
-        console.log(err);
-        return res.status(401).json({success: false})
-        // err
-      }
-
+exports.authenticator = (req,res,next)=> {
+try{
+    console.log(req,"this is request Authorization")
+    console.log(req.header,"This is inside heasder checking authenticator")
+    const token = req.header('Authorization')
+    console.log(token,"token in header authorization")
+    const user = jwt.verify(token,'secretkey')
+    console.log('User Id passing as req.user', user.userId)
+    User.findByPk(user.userId)
+    .then(user=>{
+        req.user = user
+        console.log(req.user.id)
+        console.log(user,"Authorization user in middleware")
+        next();
+    })
 }
-
-module.exports = {
-    authenticate
+    catch(err){
+    console.log(err,"Middleware error in getting jwt token")
+    return res.json({err,success:false})
+    }
 }

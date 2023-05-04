@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-</head>
-<body>
-
-        <form onsubmit=" login(event)">
-
-            <label for="email">Enter Email</label>
-            <input  id="email" type="email" name="email">
-            <label for="password">Enter Password</label>
-            <input id="password" type="password" name="password">
-            <button id="btn">Login</button>
-        </form>
-        <button onclick="forgotpassword()">ForgetPassword</button>
-        <script src="login.js"></script>
-     
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <title>Login</title>
+</head>
+<body >
+    <h1 style="text-align:center;background-color:aliceblue">Welcome to My chat</h1>
+    <h3 style="text-align:center;">Please Enter your credentials</h3>
+    <form style="text-align:center;">
+        <label>Email   :</label>
+        <input type="email" id="e2">
+        <br><br>
+        <label>Password:</label>
+        <input type="password" id="pass2">
+        <br><br>
+        <button id="loginbtn">Login</button>
+    </form>
+    <br><br><br><br><br>
+    <p>New User Click to Signup</p>
+    <a href="./signup.html"><button>Signup</button></a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

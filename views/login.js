@@ -1,37 +1,26 @@
-async function login(e) {
-    e.preventDefault();
-    // console.log(e.target.name);
-    const form = new FormData(e.target);
-    console.log('12345')
-
-    const loginDetails = {
-        email: form.get("email"),
-        password: form.get("password")
-
+let btn=document.getElementById('loginbtn');
+btn.addEventListener('click',(e)=>{
+    e.preventDefault()
+    let email=document.getElementById('e2').value
+    let password=document.getElementById('pass2').value
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!(email.match(validRegex))) {
+        alert("Invalid email address!");
+        return false;
     }
-    console.log(loginDetails)
-    await axios.post('http://localhost:3000/login',loginDetails).then(response => {
-        console.log(response,'---------------------------------------------login')
-        if(response.status === 200){
-            console.log('index')
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userDetails', JSON.stringify(response.data.user))
-            alert('login done')
-            window.location.href = "./chat.html" // change the page on successful login
-        } else {
-            throw new Error('Failed to login')
-        }
-    }).catch(err => {
-        document.body.innerHTML += `<div style="color:red;">${err} <div>`;
+    let userdetails={
+    email:email,
+    password:password,
+    };
+    axios.post("http://localhost:3000/signin",userdetails)
+    .then(response=>{
+        console.log(response.data,"List of online users")
+        localStorage.setItem('token',response.data.token)
+        
+        window.location.href="http://127.0.0.1:5500/views/group.html"
     })
-   
-}
-
-// document.getElementById('btnpassword').onclick(()=>{
-//     window.location.href = "./forgotpassword.html"
-
-// })
-
-function forgotpassword() {
-    window.location.href = "./forgotpassword.html"
-}
+    .catch(err=>{
+        alert(err.message)
+        console.log(err)
+    })
+})
